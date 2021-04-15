@@ -50,8 +50,9 @@
  *          ehPar(7) -> 0
  */
 int32_t ehPar(int32_t x) {
-    return -1;
+    return !(x & 1);
 }
+
 
 /*
  * Módulo 8
@@ -69,7 +70,7 @@ int32_t ehPar(int32_t x) {
  *          mod8(10) -> 2
  */
 int32_t mod8(int32_t x) {
-    return -1;
+    return x&7;
 }
 
 /* Negativo sem -
@@ -86,9 +87,8 @@ int32_t mod8(int32_t x) {
  *          negativo(42) -> -42
  */
 int32_t negativo(int32_t x) {
-    return -1;
+    return ~x + 1;
 }
-
 /* Implementação do & usando bitwise
  *      Permitido:
  *          Operações: ~ ^ | ! << >>
