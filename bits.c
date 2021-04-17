@@ -105,7 +105,7 @@ int32_t negativo(int32_t x) {
  *              11 & 1011 -> 0011
  */
 int32_t bitwiseAnd(int32_t x, int32_t y) {
-    return -1;
+    return ~( ~x | ~y);
 }
 
 /* Igual sem ==
@@ -122,7 +122,7 @@ int32_t bitwiseAnd(int32_t x, int32_t y) {
  *          ehIgual(16, 8) -> 0
  */
 int32_t ehIgual(int32_t x, int32_t y) {
-    return -1;
+    return !(x ^y);
 }
 
 /* Limpa bit n
@@ -140,7 +140,7 @@ int32_t ehIgual(int32_t x, int32_t y) {
  *          limpaBitN(3, 1) -> 1
  */
 int32_t limpaBitN(int32_t x, int8_t n) {
-    return -1;
+    return x^(1<<n);
 }
 
 /*
@@ -170,7 +170,7 @@ int32_t limpaBitN(int32_t x, int8_t n) {
  *
  */
 int32_t bitEmP(int32_t x, uint8_t p) {
-    return -1;
+    return ((x & 1<<p)>>p) & 1;
 }
 
 /*
