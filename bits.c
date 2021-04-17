@@ -260,7 +260,7 @@ int32_t minimo(int32_t x, int32_t y) {
  *
  */
 int32_t negacaoLogica(int32_t x) {
-  return -1;
+  return ((~(x & -x) + 1) >>31 )+ 1;
 }
 
 void teste(int32_t saida, int32_t esperado) {
