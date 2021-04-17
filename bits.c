@@ -49,6 +49,10 @@
  *          ehPar(2) -> 1
  *          ehPar(7) -> 0
  */
+/*Caso o numero seja par, ele não tem o menor bit como 1, logo par & 1 = 0, logo !0 = 1
+  Caso o numero seja impar, ele tem o menor bit como 1, então impar & 1 = 1, logo !1 = 0
+  Retornando assim 1 caso par e 0 caso impar
+ */
 int32_t ehPar(int32_t x) {
     return !(x & 1);
 }
@@ -69,6 +73,9 @@ int32_t ehPar(int32_t x) {
  *          mod8(7) -> 7
  *          mod8(10) -> 2
  */
+/* o resto de um numero com 8 é, exatamente, os ultimos 3 bits da direita que o numero tiver, logo:
+   Como 7 = 00000111, x&7 vai retornar exatamente o resto de x com 8
+ */
 int32_t mod8(int32_t x) {
     return x&7;
 }
@@ -86,9 +93,13 @@ int32_t mod8(int32_t x) {
  *          negativo(1) -> -1
  *          negativo(42) -> -42
  */
+/* Ao fazermos o complemento de x, vamos obter exatamente o numero -x-1
+   Logo podemos simplesmente fazer ~x + 1 e vamos obter o negativo do numero x
+ */
 int32_t negativo(int32_t x) {
     return ~x + 1;
 }
+
 /* Implementação do & usando bitwise
  *      Permitido:
  *          Operações: ~ ^ | ! << >>
@@ -104,6 +115,9 @@ int32_t negativo(int32_t x) {
  *          bitwiseAnd(3, 11) -> 3
  *              11 & 1011 -> 0011
  */
+/* Sabemos que o o complemento de | é & e que ~~numero = numero
+   Logo ao fazermos ~(~x | ~y) = ~~x & ~~y = x & y
+ */ 
 int32_t bitwiseAnd(int32_t x, int32_t y) {
     return ~( ~x | ~y);
 }
@@ -120,6 +134,12 @@ int32_t bitwiseAnd(int32_t x, int32_t y) {
  *      Exemplo:
  *          ehIgual(10, 10) -> 1
  *          ehIgual(16, 8) -> 0
+ */
+/* Ao se fazer ou exclusivo (^), ^ vai se comparar bit a bit dos dois numeros:
+   Se o bit de um dos numeros for 1 e o outro for 0, ^ vai retornar 1, caso os dois sejam 1 ou 0, ^ vai retornar 0.
+   Logo se x=y, sabemos que x^y = 0, logo !(x^y) = 1.
+   Se x!=y, sabemos que x^y vai ser algum numero qualquer diferente de 0, logo !(x^y) = 0.
+   Então vai retor 1 caso x=y, e 0 caso x!=y
  */
 int32_t ehIgual(int32_t x, int32_t y) {
     return !(x ^y);
@@ -139,8 +159,13 @@ int32_t ehIgual(int32_t x, int32_t y) {
  *          limpaBitN(3, 0) -> 2
  *          limpaBitN(3, 1) -> 1
  */
+/* Ao fazermos 1<<n vamos ter um numero com todos os bits 0 menos o bit n, do LSB ao MSB
+   Fazendo então x|(1<<n), vamos garantir que o bit n esteja preenchido
+   Ao fazer então (x|1<<n) ^ (1<<n) vamos então garantir que o bit n vai ser zerado, pois
+   Como o bit n estava preenchido, ao usarmos ^ vamos zerar o bit n. 
+ */
 int32_t limpaBitN(int32_t x, int8_t n) {
-    return x^(1<<n);
+    return (x|(1<<n))^(1<<n);
 }
 
 /*
@@ -168,6 +193,9 @@ int32_t limpaBitN(int32_t x, int8_t n) {
  *          bitEmP(23, 1) -> 1
  *          bitEmP(23, 0) -> 1
  *
+ */
+/* Ao fazermos (x & 1<<p) vamos ter todos os bits zerados e apenas o bit na posição p como 1 ou 0,
+   ao fazer então ((x & 1<<p)>>p), trazer esse bit p para a primeira posição, sabendo assim se é 1 ou 0
  */
 int32_t bitEmP(int32_t x, uint8_t p) {
     return ((x & 1<<p)>>p) & 1;
@@ -258,6 +286,15 @@ int32_t minimo(int32_t x, int32_t y) {
  *          negacaoLogica(0) -> 1
  *          negacaoLogica(37) -> 0
  *
+ */
+/* Primeiro, caso o x seja negativo, precisamos que ele seja transformado em um numero positivo, então fazemos x&-x
+   Com a conta x&-x, se x for negativo ou positivo diferente de 0, vamos obter um numero positivo diferente de 0
+   Caso o x seja 0, 0 & -0 = 0.
+   Vamos então dividir as duas possibilidades, x!=0 e x==0:
+   x!=0: ~(x & -x) + 1) = um numero negativo. Ao mover 31 posicoes a direita de um numero negativo de 31 bits, vamos obter o numero -1
+	o numero -1 + 1 = 0, logo quando x!=0, vamos retornar 0
+   x =0: ~(x & -x) + 1) = 0. Ao mover 31 posições a direita do numero 0, vamos obter novamente 0. 0+1 = 1, 
+        logo quando x=0, vamos retornar 1.
  */
 int32_t negacaoLogica(int32_t x) {
   return ((~(x & -x) + 1) >>31 )+ 1;
