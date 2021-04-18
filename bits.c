@@ -20,9 +20,11 @@
  *      - As resolu√ß√µes com menos opera√ß√µes do que a do monitor ter√£o bonifica√ß√£o.
  *
  * Assinatura:
- *      Aluno: <nome>
- *      DRE: <DRE>
- *      vers√£o do GCC utilizada: XXXX
+ *      Aluno: Wesley Mota de Oliveira Gomes
+ *      DRE: 117094621
+ *      Aluno: XX
+ *      DRE: XXx
+ *      vers√£o do GCC utilizada: gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0
  *
  */
 
@@ -160,7 +162,7 @@ int32_t ehIgual(int32_t x, int32_t y) {
  *          limpaBitN(3, 1) -> 1
  */
 /* Ao fazermos 1<<n vamos ter um numero com todos os bits 0 menos o bit n, que vai ser 1.
-   Fazendo ent„o ~(1<<n) vamos obter todos os bits 1 menos o bit n que vai ser 0.
+   Fazendo entÔøΩo ~(1<<n) vamos obter todos os bits 1 menos o bit n que vai ser 0.
    Ao fazermos x & ~(1<<n) Vamos retornar o x com o bit n zerado. 
  */
 int32_t limpaBitN(int32_t x, int8_t n) {
@@ -253,11 +255,11 @@ int32_t byteEmP(int32_t x, uint8_t p) {
  *          setaByteEmP(0x12345678, 0xFF, 3) -> 0xFF345678
  *
  */
- /* A ideia È primeiro zerar o byte p do valor x, para depois preencher com o valor y:
+ /* A ideia ÔøΩ primeiro zerar o byte p do valor x, para depois preencher com o valor y:
     0xff << (p<<3) vai nos dar exatamente o byte p preenchido totalmente e o resto zerado.
-    Ao fazermos ent„o ~(0xff << (p<<3)) vamos obter todos os bytes preenchidos menos o byte p que vai estar zerado.
-	Dessa forma fazemos x & ~(0xff << (p<<3)), para obtermos ent„o x com o byte p zerado.
-	Como sabemos que y << (p<<3) È todos os bytes zerados e o byte p sendo o valor y, ao fazermos ent„o:
+    Ao fazermos entÔøΩo ~(0xff << (p<<3)) vamos obter todos os bytes preenchidos menos o byte p que vai estar zerado.
+	Dessa forma fazemos x & ~(0xff << (p<<3)), para obtermos entÔøΩo x com o byte p zerado.
+	Como sabemos que y << (p<<3) ÔøΩ todos os bytes zerados e o byte p sendo o valor y, ao fazermos entÔøΩo:
 	x & ~(0xff << (p<<3)) | y <<(p<<3) vamos obter x com o valor y no byte p.
   */
 int32_t setaByteEmP(int32_t x, int32_t y, uint8_t p) {
