@@ -223,7 +223,12 @@ int32_t bitEmP(int32_t x, uint8_t p) {
  *          byteEmP(0x12345678, 3) -> 0x12
  *
  */
+ /*
+    Eu muliplico p por 2^3, para encontrar o quanto que eu irei mover o x 
+    e depois coloco na máscara dos dois dígitos
+ */
 int32_t byteEmP(int32_t x, uint8_t p) {
+
     return (x >> (p<< 3)) & 0xFF;
 }
 /*
@@ -266,6 +271,13 @@ int32_t setaByteEmP(int32_t x, int32_t y, uint8_t p) {
  *          minimo(-2, -1) -> -2
  *          minimo(-1, 2) -> -1
  *
+ */
+ /*
+ Movo a subtração de x e y em 31, pois é inteiro 32, 
+ Se (x-y) for menor que 0, então (x -y) >> 31 será 1. 
+ Se (x-y) for maior ou igual a 0, então (x -y) >> 31 será 0.
+ Portanto, se x> = y, obtemos o mínimo como y + (x-y) & 0, que é y.
+ Se x <y, obtemos o mínimo de y + (x-y) & 1, que é x.
  */
 int32_t minimo(int32_t x, int32_t y) {
     return y + ((x - y) & ((x - y) >>31));
