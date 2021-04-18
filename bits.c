@@ -159,13 +159,12 @@ int32_t ehIgual(int32_t x, int32_t y) {
  *          limpaBitN(3, 0) -> 2
  *          limpaBitN(3, 1) -> 1
  */
-/* Ao fazermos 1<<n vamos ter um numero com todos os bits 0 menos o bit n, do LSB ao MSB
-   Fazendo então x|(1<<n), vamos garantir que o bit n esteja preenchido
-   Ao fazer então (x|1<<n) ^ (1<<n) vamos então garantir que o bit n vai ser zerado, pois
-   Como o bit n estava preenchido, ao usarmos ^ vamos zerar o bit n. 
+/* Ao fazermos 1<<n vamos ter um numero com todos os bits 0 menos o bit n, que vai ser 1.
+   Fazendo ent�o ~(1<<n) vamos obter todos os bits 1 menos o bit n que vai ser 0.
+   Ao fazermos x & ~(1<<n) Vamos retornar o x com o bit n zerado. 
  */
 int32_t limpaBitN(int32_t x, int8_t n) {
-    return (x|(1<<n))^(1<<n);
+    return x & ~(1<<n);
 }
 
 /*
@@ -195,7 +194,9 @@ int32_t limpaBitN(int32_t x, int8_t n) {
  *
  */
 /* Ao fazermos (x & 1<<p) vamos ter todos os bits zerados e apenas o bit na posição p como 1 ou 0,
-   ao fazer então ((x & 1<<p)>>p), trazer esse bit p para a primeira posição, sabendo assim se é 1 ou 0
+   ao fazer então ((x & 1<<p)>>p), trazer esse bit p para a primeira posição, sabendo assim se é 1 ou 0 
+   No final fazemos ((x & 1<<p)>>p) & 1; para prevenir caso o resultado seja -1, pois quando o p for 31, ao se
+   shiftar para direita vamos estender com numeros 1, gerando assim um numero negativo, o -1, logo fazemos -1 & 1 = 1. 
  */
 int32_t bitEmP(int32_t x, uint8_t p) {
     return ((x & 1<<p)>>p) & 1;
@@ -247,8 +248,15 @@ int32_t byteEmP(int32_t x, uint8_t p) {
  *          setaByteEmP(0x12345678, 0xFF, 3) -> 0xFF345678
  *
  */
+ /* A ideia � primeiro zerar o byte p do valor x, para depois preencher com o valor y:
+    0xff << (p<<3) vai nos dar exatamente o byte p preenchido totalmente e o resto zerado.
+    Ao fazermos ent�o ~(0xff << (p<<3)) vamos obter todos os bytes preenchidos menos o byte p que vai estar zerado.
+	Dessa forma fazemos x & ~(0xff << (p<<3)), para obtermos ent�o x com o byte p zerado.
+	Como sabemos que y << (p<<3) � todos os bytes zerados e o byte p sendo o valor y, ao fazermos ent�o:
+	x & ~(0xff << (p<<3)) | y <<(p<<3) vamos obter x com o valor y no byte p.
+  */
 int32_t setaByteEmP(int32_t x, int32_t y, uint8_t p) {
-    return  x | y << (p<< 3);
+    return x & ~(0xff << (p<<3)) | y <<(p<<3);
 }
 
 /*
