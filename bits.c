@@ -22,9 +22,10 @@
  * Assinatura:
  *      Aluno: Wesley Mota de Oliveira Gomes
  *      DRE: 117094621
- *      Aluno: XX
- *      DRE: XXx
- *      versão do GCC utilizada: gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0
+ *	versão do GCC utilizada: gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0
+ *      Aluno: Nicolas Padre de Lima	
+ *      DRE: 118093872
+ *      versão do GCC utilizada: gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
  *
  */
 
@@ -312,9 +313,9 @@ int32_t minimo(int32_t x, int32_t y) {
    Com a conta x&-x, se x for negativo ou positivo diferente de 0, vamos obter um numero positivo diferente de 0
    Caso o x seja 0, 0 & -0 = 0.
    Vamos então dividir as duas possibilidades, x!=0 e x==0:
-   x!=0: ~(x & -x) + 1) = um numero negativo. Ao mover 31 posicoes a direita de um numero negativo de 31 bits, vamos obter o numero -1
-	o numero -1 + 1 = 0, logo quando x!=0, vamos retornar 0
-   x =0: ~(x & -x) + 1) = 0. Ao mover 31 posições a direita do numero 0, vamos obter novamente 0. 0+1 = 1, 
+   x!=0: ~(x & -x) + 1) = um numero negativo. Ao mover 31 posicoes a direita de um numero negativo, vamos obter o numero -1
+	então somamos o numero -1 + 1 = 0, logo quando x!=0, vamos retornar 0
+   x =0: ~(x & -x) + 1) = 0. Ao mover 31 posições a direita do numero 0, vamos obter novamente 0. somamos então 0+1 = 1, 
         logo quando x=0, vamos retornar 1.
  */
 int32_t negacaoLogica(int32_t x) {
