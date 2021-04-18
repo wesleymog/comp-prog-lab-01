@@ -224,9 +224,8 @@ int32_t bitEmP(int32_t x, uint8_t p) {
  *
  */
 int32_t byteEmP(int32_t x, uint8_t p) {
-    return -1;
+    return (x >> (p<< 3)) & 0xFF;
 }
-
 /*
  * Seta byte na posição p do inteiro x como y
  *      Permitido:
@@ -249,7 +248,7 @@ int32_t byteEmP(int32_t x, uint8_t p) {
  *
  */
 int32_t setaByteEmP(int32_t x, int32_t y, uint8_t p) {
-    return -1;
+    return  x | y << (p<< 3);
 }
 
 /*
@@ -269,7 +268,7 @@ int32_t setaByteEmP(int32_t x, int32_t y, uint8_t p) {
  *
  */
 int32_t minimo(int32_t x, int32_t y) {
-    return -1;
+    return y + ((x - y) & ((x - y) >>31));
 }
 
 /*
